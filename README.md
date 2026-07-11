@@ -4,21 +4,20 @@ Corporate website for [United Dream Limited](https://dreamlimited.net), the pare
 
 ## Status
 
-This repository currently contains the lightweight GitHub Pages placeholder. The production design will replace it after a template is selected and licensed.
+The production site uses Astro 6 with static output for GitHub Pages.
 
 ## Local preview
 
-The current site is plain HTML and requires no build step:
+Install dependencies and run Astro:
 
 ```sh
-python3 -m http.server 8000
+npm install
+npm run dev
 ```
-
-Then open `http://localhost:8000`.
 
 ## Deployment
 
-GitHub Pages publishes the root of the `main` branch. The custom domain is declared in `CNAME`; HTTPS is served through GitHub Pages with Cloudflare providing DNS and proxying.
+GitHub Actions builds Astro and deploys `dist/` to GitHub Pages. The custom domain is declared in `public/CNAME`.
 
 ## Ownership
 
