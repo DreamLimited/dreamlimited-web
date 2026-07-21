@@ -1,6 +1,6 @@
 # United Dream Limited website
 
-Corporate website for [United Dream Limited](https://dreamlimited.net), the parent company of the DreamLimited portfolio.
+Corporate website for [United Dream Limited](https://dreamlimited.org), the parent company of the DreamLimited portfolio.
 
 ## Status
 

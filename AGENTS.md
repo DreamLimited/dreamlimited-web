@@ -2,12 +2,12 @@
 
 ## Scope
 
-This repository publishes `dreamlimited.net`, the corporate site for United Dream Limited, parent company of the DreamLimited portfolio.
+This repository publishes `dreamlimited.org`, the corporate site for United Dream Limited, parent company of the DreamLimited portfolio.
 
 ## Technical constraints
 
 - The deployable output must be static and compatible with GitHub Pages.
-- Preserve `CNAME` with the exact value `dreamlimited.net`.
+- Preserve `CNAME` with the exact value `dreamlimited.org`.
 - Never commit credentials, API keys, customer data, or private portfolio information.
 - If adopting Astro, use static output and ensure the generated artifact works at the domain root.
 - Keep dependencies minimal and pin major toolchain versions.

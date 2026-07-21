@@ -1,7 +1,7 @@
 import { defineConfig } from 'astro/config';
 
 export default defineConfig({
-  site: 'https://dreamlimited.net',
+  site: 'https://dreamlimited.org',
   output: 'static',
   security: { csp: true },
 });
