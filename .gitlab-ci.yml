@@ -1,0 +1,52 @@
+# United Dream Limited corporate site (dreamlimited.org) — CI (GitLab side)
+#
+# Static Astro site. No container image is produced — the site is built and
+# published by a GitHub Actions workflow (.github/workflows/pages.yml) on the
+# GitHub mirror and deployed to GitHub Pages. GitHub Pages is the sole hosting
+# plane, so no launch-sequence deploy pipeline (container/Harbor/K8s) is
+# included. Same posture as DreamLimited/dream-curriculum-web.
+#
+# Posture: launch-sequence validate-only pipeline (source assurance: lint +
+# SAST), plus a `build` job that proves `npm run build` compiles the site so a
+# broken page or content error fails CI instead of shipping.
+#
+# This file also replaces GitLab Auto DevOps, which has no buildpack/Dockerfile
+# to work with here and failed on every main push.
+include:
+  - project: 'DroidOpsInc/launch-sequence'
+    ref: main
+    file: '/pipelines/validate-only.yml'
+
+stages:
+  - preflight
+  - security
+  - build
+
+variables:
+  IMAGE_REGISTRY: "harbor.focuscell.org"
+  # Node 22 LTS (matches .github/workflows/pages.yml) via the dockerhub proxy.
+  PREFLIGHT_IMAGE: "${IMAGE_REGISTRY}/dockerhub-proxy/library/node:22-alpine"
+  BUILD_IMAGE: "${IMAGE_REGISTRY}/dockerhub-proxy/library/node:22-alpine"
+  # validate-only requires a lint command. No linter is wired for this site;
+  # source assurance is the `build` job (astro build). Keep preflight cheap so
+  # it does not duplicate the build job's npm ci.
+  PREFLIGHT_COMMANDS: "echo 'lint: no linter wired; gated by build job (astro build)' && npm --version"
+
+# --- Prove the Astro site compiles into dist/ (source assurance) ---
+build:
+  stage: build
+  image: $BUILD_IMAGE
+  cache:
+    key:
+      files:
+        - package-lock.json
+    paths:
+      - node_modules/
+  script:
+    - npm ci --no-audit --no-fund
+    - npm run build
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+      when: always
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
+      when: always
