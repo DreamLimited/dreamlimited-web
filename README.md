@@ -6,7 +6,7 @@ Corporate website for [United Dream Limited](https://dreamlimited.org), the pare
 
 ## Status
 
-The production site uses Astro 6 with static output for GitHub Pages.
+The production site uses Astro 7 with static output for GitHub Pages.
 
 ## Local preview
 
